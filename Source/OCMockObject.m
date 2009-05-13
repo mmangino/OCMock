@@ -34,9 +34,42 @@
 	return [[[OCProtocolMockObject alloc] initWithProtocol:aProtocol] autorelease];
 }
 
++ (BOOL) mustUseProxy: (id) anObject 
+{
+	return ([anObject isKindOfClass:  [NSString class]] ||
+			[anObject isKindOfClass:  [NSArray class]] ||
+			[anObject isKindOfClass:  [NSAttributedString class]] ||
+			[anObject isKindOfClass:  [NSCalendar class]] ||
+			[anObject isKindOfClass:  [NSCharacterSet class]] ||
+			[anObject isKindOfClass:  [NSData class]] ||
+			[anObject isKindOfClass:  [NSDate class]] ||
+			[anObject isKindOfClass:  [NSDictionary class]] ||
+			[anObject isKindOfClass:  [NSError class]] ||
+			[anObject isKindOfClass:  [NSLocale class]] ||
+			[anObject isKindOfClass:  [NSMutableArray class]] ||
+			[anObject isKindOfClass:  [NSMutableAttributedString class]] ||
+			[anObject isKindOfClass:  [NSMutableCharacterSet class]] ||
+			[anObject isKindOfClass:  [NSMutableData class]] ||
+			[anObject isKindOfClass:  [NSMutableDictionary class]] ||
+			[anObject isKindOfClass:  [NSMutableSet class]] ||
+			[anObject isKindOfClass:  [NSMutableString class]] ||
+			[anObject isKindOfClass:  [NSNumber class]] ||
+			[anObject isKindOfClass:  [NSInputStream class]] ||
+			[anObject isKindOfClass:  [NSTimer class]] ||
+			[anObject isKindOfClass:  [NSSet class]] ||
+			[anObject isKindOfClass:  [NSTimeZone class]] ||
+			[anObject isKindOfClass:  [NSURL class]] ||
+			[anObject isKindOfClass:  [NSOutputStream class]] 
+					);
+}
+
 + (id)partialMockForObject:(NSObject *)anObject
 {
-	return [[[OCPartialMockObject alloc] initWithObject:anObject] autorelease];
+	if ([OCMockObject mustUseProxy: anObject]){		
+		return [[[OCPartialMockObject alloc] initWithObject:anObject] autorelease];		
+	} else {
+		return [OCPartialMockObject partialMockWithObject: anObject];
+	}
 }
 
 

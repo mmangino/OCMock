@@ -5,7 +5,8 @@
 
 #import <OCMock/OCMock.h>
 #import "OCMockObjectTests.h"
-
+#import "OCPartialMockObject.h"
+#import <objc/objc-runtime.h>
 // --------------------------------------------------------------------------------------
 //	Helper classes and protocols for testing
 // --------------------------------------------------------------------------------------
@@ -439,7 +440,8 @@
 
 - (void)testStubsMethodsOnPartialMock
 {
-	mock = [OCMockObject partialMockForObject:[NSString stringWithString:@"hello"]];
+	id s = [NSString stringWithString:@"hello"];
+	mock = [OCMockObject partialMockForObject:s];
 	[[[mock stub] andReturn:@"hi"] uppercaseString];
 	STAssertEqualObjects(@"hi", [mock uppercaseString], @"Should have returned stubbed value");
 }
@@ -450,6 +452,7 @@
 	STAssertEqualObjects(@"HELLO2", [mock uppercaseString], @"Should have returned value from real object.");
 }
 
+// Pending a way to change the class of an NSString
 //- (void)testStubsMethodOnRealObjectReference
 //{
 //	NSString *realObject = [NSString stringWithString:@"hello3"];
@@ -458,13 +461,13 @@
 //	STAssertEqualObjects(@"hi", [realObject uppercaseString], @"Should have stubbed method.");
 //}
 
-//- (void)testCallsToSelfInRealObjectAreShadowedByPartialMock
-//{
-//	TestClassThatCallsSelf *foo = [[[TestClassThatCallsSelf alloc] init] autorelease];
-//	mock = [OCMockObject partialMockForObject:foo];
-//	[[[mock stub] andReturn:@"FooFoo"] method2];
-//	STAssertEqualObjects(@"FooFoo", [mock method1], @"Should have called through to stubbed method.");
-//}
+- (void)testCallsToSelfInRealObjectAreShadowedByPartialMock
+{
+	TestClassThatCallsSelf *foo = [[[TestClassThatCallsSelf alloc] init] autorelease];
+	mock = [OCMockObject partialMockForObject:foo];
+	[[[mock stub] andReturn:@"FooFoo"] method2];
+	STAssertEqualObjects(@"FooFoo", [mock method1], @"Should have called through to stubbed method.");
+}
 
 
 // --------------------------------------------------------------------------------------

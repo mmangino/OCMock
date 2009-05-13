@@ -56,6 +56,9 @@
 		03DE219006DB91CF00E5A2A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DE218F06DB91CF00E5A2A8 /* Foundation.framework */; };
 		03DE21B306DB95C500E5A2A8 /* OCMock.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DE21B206DB95C500E5A2A8 /* OCMock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		03DE221706DB97DA00E5A2A8 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03DE221606DB97DA00E5A2A8 /* License.txt */; };
+		485579810FBAF88F00BA4525 /* OCPartialMockRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 485579800FBAF88F00BA4525 /* OCPartialMockRecorder.m */; };
+		48557A160FBB05BE00BA4525 /* OCPartialMockRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 485579800FBAF88F00BA4525 /* OCPartialMockRecorder.m */; };
+		48557B9E0FBB44F700BA4525 /* OCPartialMockRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 48557B9B0FBB44F700BA4525 /* OCPartialMockRecorder.h */; };
 		8DC2EF510486A6940098B216 /* OCMock_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32DBCF5E0370ADEE00C91783 /* OCMock_Prefix.pch */; };
 		9F35D3DC0D349E7E00C05E52 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* OCMock.framework */; };
 /* End PBXBuildFile section */
@@ -117,6 +120,10 @@
 		03DE21B206DB95C500E5A2A8 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
 		03DE221606DB97DA00E5A2A8 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		32DBCF5E0370ADEE00C91783 /* OCMock_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock_Prefix.pch; sourceTree = "<group>"; };
+		4855797F0FBAF88F00BA4525 /* OCPartialMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCPartialMockRecorder.h; sourceTree = "<group>"; };
+		485579800FBAF88F00BA4525 /* OCPartialMockRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCPartialMockRecorder.m; sourceTree = "<group>"; };
+		48557B9B0FBB44F700BA4525 /* OCPartialMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCPartialMockRecorder.h; sourceTree = "<group>"; };
+		48557B9C0FBB44F700BA4525 /* OCPartialMockRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCPartialMockRecorder.m; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* OCMock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OCMock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -217,6 +224,8 @@
 		08FB77AEFE84172EC02AAC07 /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
+				48557B9B0FBB44F700BA4525 /* OCPartialMockRecorder.h */,
+				48557B9C0FBB44F700BA4525 /* OCPartialMockRecorder.m */,
 				03DE1F5406DB911300E5A2A8 /* OCMockObject.h */,
 				03DE1F5506DB911300E5A2A8 /* OCMockObject.m */,
 				0338A99607BE7C100066DE8A /* OCClassMockObject.h */,
@@ -242,6 +251,8 @@
 				03D880D30F8DA4750087D071 /* NSNotificationCenter+OCMAdditions.h */,
 				03D880D40F8DA4750087D071 /* NSNotificationCenter+OCMAdditions.m */,
 				0338AA1007BE866F0066DE8A /* NSMethodSignature+Private.h */,
+				4855797F0FBAF88F00BA4525 /* OCPartialMockRecorder.h */,
+				485579800FBAF88F00BA4525 /* OCPartialMockRecorder.m */,
 			);
 			name = Implementation;
 			sourceTree = "<group>";
@@ -293,6 +304,7 @@
 				03D880D50F8DA4750087D071 /* NSNotificationCenter+OCMAdditions.h in Headers */,
 				03D881090F8DB0BB0087D071 /* OCMObserverRecorder.h in Headers */,
 				03D8822F0FA151E20087D071 /* OCPartialMockObject.h in Headers */,
+				48557B9E0FBB44F700BA4525 /* OCPartialMockRecorder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +450,7 @@
 				03D880D70F8DA4750087D071 /* NSNotificationCenter+OCMAdditions.m in Sources */,
 				03D8815C0F8DB37B0087D071 /* OCMObserverRecorder.m in Sources */,
 				03D882310FA151E20087D071 /* OCPartialMockObject.m in Sources */,
+				485579810FBAF88F00BA4525 /* OCPartialMockRecorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +469,7 @@
 				03D880620F8C81DE0087D071 /* OCObserverMockObject.m in Sources */,
 				03D880D60F8DA4750087D071 /* NSNotificationCenter+OCMAdditions.m in Sources */,
 				03D8815B0F8DB37B0087D071 /* OCMObserverRecorder.m in Sources */,
+				48557A160FBB05BE00BA4525 /* OCPartialMockRecorder.m in Sources */,
 				03D882300FA151E20087D071 /* OCPartialMockObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,15 +496,16 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = OCMock_Prefix.pch;
 				INFOPLIST_FILE = "Test-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_STYLE = BUNDLE;
-				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = OCMockTests;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -513,12 +528,12 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = OCMock_Prefix.pch;
 				INFOPLIST_FILE = "Test-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_STYLE = BUNDLE;
-				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
@@ -559,7 +574,6 @@
 				LIBRARY_SEARCH_PATHS = "";
 				LIBRARY_STYLE = Dynamic;
 				MACH_O_TYPE = mh_dylib;
-				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-fobjc-exceptions";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = OCMock;

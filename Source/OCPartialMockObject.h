@@ -8,9 +8,11 @@
 
 @interface OCPartialMockObject : OCClassMockObject 
 {
-	NSObject	*realObject;
+	NSObject	*_realObject;
 }
 
+- (id) realObject;
 - (id)initWithObject:(NSObject *)anObject;
-
++ (id)partialMockWithObject:(NSObject *)anObject;
++ (void) mockOrStubMethod: (SEL) selector forMock: (id) mock;
 @end
