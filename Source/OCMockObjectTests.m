@@ -469,6 +469,23 @@
 	STAssertEqualObjects(@"FooFoo", [mock method1], @"Should have called through to stubbed method.");
 }
 
+- (void)testRealPartialMocksCanBeVerified
+{
+	TestClassThatCallsSelf *foo = [[[TestClassThatCallsSelf alloc] init] autorelease];
+	mock = [OCMockObject partialMockForObject:foo];
+	[[[mock expect] andReturn:@"FooFoo"] method2];
+	[mock method2];
+	STAssertNoThrow([mock verify], @"Verify Raised when it shouldn't");
+}
+- (void)testRealPartialMocksRaiseExceptionOnVerifyWhenNotCalled
+{
+	id foo = [[[TestClassThatCallsSelf alloc] init] autorelease];
+	mock = [OCMockObject partialMockForObject:foo];
+	[[foo expect] method2];
+
+	STAssertThrows([foo verify], @"Verify failed");
+}
+
 
 // --------------------------------------------------------------------------------------
 //	mocks should honour the NSObject contract

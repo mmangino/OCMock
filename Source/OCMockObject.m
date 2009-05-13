@@ -218,7 +218,6 @@
 	}
 }
 
-
 - (NSString *)_recorderDescriptions:(BOOL)onlyExpectations
 {
 	NSMutableString *outputString = [NSMutableString string];

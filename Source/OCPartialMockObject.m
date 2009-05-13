@@ -15,6 +15,7 @@
 - (void) forwardToShadow: (NSInvocation *) invocation;
 - (id) expect;
 - (id) stub;
+- (void) verify;
 @end
 @implementation OCPartialMockForwardingHolder 
 
@@ -29,6 +30,10 @@
 - (id) stub {
 	OCMockObject *shadow = [_OCPartialMockShadowObjects objectForKey:[NSString stringWithCString:object_getClassName(self)]];
 	return [shadow stub];
+}
+- (void) verify {
+	OCMockObject *shadow = [_OCPartialMockShadowObjects objectForKey:[NSString stringWithCString:object_getClassName(self)]];
+	[shadow verify];
 }
 
 @end
@@ -59,35 +64,46 @@
 	}
 	[_OCPartialMockShadowObjects setObject:mock forKey: [NSString stringWithCString:object_getClassName(anObject)]];
 }
++(void) forwardMethodToHolder:(SEL) selector forClass:(Class) c
+{
+	OCPartialMockForwardingHolder * holder = [[OCPartialMockForwardingHolder alloc] init];
+	IMP implementation = [ holder methodForSelector: selector];	
+	Method mf = class_getInstanceMethod([OCPartialMockForwardingHolder class], selector);
+	class_addMethod(c,selector, implementation, method_getTypeEncoding(mf));
+	[holder release];
+}
 
-+ (id)partialMockWithObject:(NSObject *)anObject {
++ (id)partialMockWithObject:(NSObject *)anObject 
+{
+
+	// create the custom subclass and a mock
 	NSString *objectIdentifier = [NSString stringWithFormat:@"Mock%d%s",[OCPartialMockObject nextSequence],class_getName([anObject class])];
 	Class subclass = objc_allocateClassPair([anObject class], [objectIdentifier cStringUsingEncoding:NSASCIIStringEncoding], 0);
-	
 	id mockObject = [[OCPartialMockObject alloc] initWithObject:anObject];
 
 	// Hook up the forwarder
 	IMP myForwarder = class_getMethodImplementation([OCPartialMockForwardingHolder class],@selector(forwardToShadow:));
-
 	Method mf = class_getInstanceMethod([mockObject class], @selector(forwardToShadow:));
 	class_addMethod(subclass,@selector(forwardInvocation:),myForwarder, method_getTypeEncoding(mf));	
-	// hook up expect and stub
-	IMP forwarder = [[[OCPartialMockForwardingHolder alloc] init]   methodForSelector: @selector(stub)];	
-	mf = class_getInstanceMethod([OCPartialMockForwardingHolder class], @selector(expect));
-	class_addMethod(subclass, @selector(expect), forwarder, method_getTypeEncoding(mf));
-	mf = class_getInstanceMethod([OCPartialMockForwardingHolder class], @selector(stub));
-	class_addMethod(subclass, @selector(stub), forwarder, method_getTypeEncoding(mf));
 	
+	// hook up expect, stub and verify
+	[OCPartialMockObject forwardMethodToHolder:@selector(expect) forClass:subclass];
+	[OCPartialMockObject forwardMethodToHolder:@selector(stub) forClass:subclass];
+	[OCPartialMockObject forwardMethodToHolder:@selector(verify) forClass:subclass];
+	
+	// register the class and convert the object to our new class
 	objc_registerClassPair(subclass);
 	object_setClass(anObject, subclass);
 
+	//register the shadow
 	[OCPartialMockObject shadowObject: anObject withMock: mockObject];
 	return anObject;
 }
 
 
 
-+ (void) mockOrStubMethod: (SEL) selector forMock: (id) mock {
++ (void) mockOrStubMethod: (SEL) selector forMock: (id) mock 
+{
 	Class subclass = [mock class];
 	Method methodToForward = class_getInstanceMethod(subclass,selector);
 	IMP forwarder = [mock methodForSelector:@selector(aMethodThatMustNotExist)];
